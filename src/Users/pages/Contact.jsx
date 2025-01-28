@@ -7,7 +7,7 @@ function Contact() {
         <div>
             <Navbar/>
             <div className='flex justify-center items-center flex-col'>
-                <div class="w-full flex justify-center items-center h-64 bg-[url('https://static.vecteezy.com/system/resources/previews/019/897/278/non_2x/banner-with-two-pairs-of-red-youth-shoe-on-a-blue-wooden-surface-photo.jpg')] bg-cover bg-center">
+                <div class="w-full flex justify-center items-center h-80  bg-[url('https://static.vecteezy.com/system/resources/previews/019/897/278/non_2x/banner-with-two-pairs-of-red-youth-shoe-on-a-blue-wooden-surface-photo.jpg')] bg-cover bg-center">
                     <h3 className='text-xl lg:text-5xl font-extrabold'>CONTACT US</h3>
 
                 </div>

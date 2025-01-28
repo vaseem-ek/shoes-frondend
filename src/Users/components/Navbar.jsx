@@ -79,17 +79,17 @@ const Navbar = () => {
                                             >
                                                 Profile 
                                             </a>
-                                            <a
-                                                href="#"
+                                            <Link
+                                                to="/login"
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                 role="menuitem"
                                                 tabIndex="-1"
                                                 id="menu-item-1"
                                                 onClick={()=>{setIsOpen(!isOpen)}}
                                             >Login
-                                            </a>
-                                            <a
-                                                href="#"
+                                            </Link>
+                                            <Link
+                                                to="/register"
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                 role="menuitem"
                                                 tabIndex="-1"
@@ -97,7 +97,7 @@ const Navbar = () => {
                                                 onClick={()=>{setIsOpen(!isOpen)}}
                                             >
                                                 Sign up
-                                            </a>
+                                            </Link>
                                         </div>
                                     </div>
                                 )}
