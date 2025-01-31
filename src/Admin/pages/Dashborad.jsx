@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SideBar from '../components/SideBar'
+import { listShoe } from '../../services/All_Api'
 
 function Dashborad() {
+
+
+
   return (
     <div>
     <div>

@@ -9,3 +9,10 @@ export const registetApi=async(data)=>{
 export const LoginApi=async(data)=>{
     return await commonApi(`${BaseUrl}/log`,'POST','',data)
 }
+//admin
+export const addShoes=async(data,headers)=>{
+    return await commonApi(`${BaseUrl}/admin/addShoes`,'POST',headers,data)
+}
+export const listShoe=async(headers)=>{
+    return await commonApi(`${BaseUrl}/admin/list-shoes`,'GET',headers,"")
+}

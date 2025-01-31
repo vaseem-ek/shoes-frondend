@@ -21,11 +21,19 @@ function Login() {
         const result = await LoginApi(userData)
         console.log(result)
         if (result.status == 200) {
-            nav('/')
-            alert('login success')
-            JSON.parse(sessionStorage.setItem('token', result.data.token))
-            // JSON.parse(sessionStorage.setItem('token', result.data.user)
-        // )
+            if(result.data.user.role=='user'){
+
+                nav('/')
+                alert('login success')
+                sessionStorage.setItem('token', result.data.token)
+                sessionStorage.setItem('user', JSON.stringify(result.data.user))
+            }
+            else{
+                sessionStorage.setItem('token', result.data.token)
+                sessionStorage.setItem('user', JSON.stringify(result.data.user))
+                nav('/admin')
+
+            }
             
         } else {
             alert(result.response.data.message)

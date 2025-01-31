@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SideBar from '../components/SideBar'
 import { MdOutlineEdit } from 'react-icons/md'
 import { RxCross2 } from 'react-icons/rx'
+import { listShoe } from '../../services/All_Api'
 
 function RecipeList() {
+    useEffect(()=>{
+        getItem()
+    },[])
+
+    const getItem=async()=>{
+
+        const header={
+            'Content-type':'application/json',
+            'Authorization':`Token ${sessionStorage.getItem('token')}`
+        }
+        const result=await listShoe(header)
+        console.log(result);
+        
+    }
     return (
         <div>
             <div>
