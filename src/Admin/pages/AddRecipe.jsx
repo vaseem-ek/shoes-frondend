@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from '../components/SideBar'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { addShoes } from '../../services/All_Api'
+import { toast } from 'react-toastify'
 
 function AddRecipe() {
     const [image1, setImage1] = useState("")
@@ -16,6 +17,7 @@ function AddRecipe() {
     const [gender, setGender] = useState("")
     const [type, setType] = useState("")
     const [size, setSize] = useState([])
+    const nav=useNavigate()
 
 
     const handleSubmit = async (e) => {
@@ -41,6 +43,20 @@ function AddRecipe() {
             }
             const res=await addShoes(fd,headers)
             console.log(res)
+            toast.success(res.data.message)
+            nav('/admin/Allproduct')
+            setImage1("")
+            setImage2("")
+            setImage3("")
+            setImage4("")
+            setName("")
+            setDescription("")
+            setBrand("")
+            setColor("")
+            setPrice("")
+            setGender("")
+            setType("")
+            setSize([])
         } catch (error) {
 
         }
@@ -58,7 +74,7 @@ function AddRecipe() {
                     <form action="" onSubmit={handleSubmit}>
                         <div class=" flex">
                             <div className='w-3/4 border-2 border-gray-200  rounded-lg dark:border-gray-700 p-4 '>
-                                <div className='flex gap-2 justify-between'>
+                                <div className='flex gap-2 '>
                                     <div class="flex flex-col items-center">
                                         <input id="image1" type="file" onChange={(e) => { setImage1(e.target.files[0]) }} className="hidden" />
 
@@ -108,10 +124,10 @@ function AddRecipe() {
 
                                 </div>
                                 <div className='mt-2'>
-                                    <input type="text" onChange={(e) => setName(e.target.value)} className='w-full outline outline-slate-200 rounded p-2' placeholder='enter Shoe Name' />
+                                    <input type="text" onChange={(e) => setName(e.target.value)} className='w-full outline outline-slate-200 rounded p-2' placeholder='Enter Shoe Name' />
                                 </div>
                                 <div className='mt-2'>
-                                    <textarea type="text" onChange={(e) => setDescription(e.target.value)} className='w-full outline outline-slate-200 rounded p-2' placeholder='enter Shoe description' />
+                                    <textarea type="text" onChange={(e) => setDescription(e.target.value)} className='w-full outline outline-slate-200 rounded p-2' placeholder='Enter Shoe description' />
                                 </div>
                                 <div className='mt-2'>
                                     <select
@@ -145,7 +161,7 @@ function AddRecipe() {
                                     </select>
                                 </div>
                                 <div className='mt-2'>
-                                    <input type="number" onChange={(e) => setPrice(e.target.value)} className='w-full outline outline-slate-200 rounded p-2' placeholder='enter price' />
+                                    <input type="number" onChange={(e) => setPrice(e.target.value)} className='w-full outline outline-slate-200 rounded p-2' placeholder='Enter Price' />
                                 </div>
 
                                 <div className='mt-2'>

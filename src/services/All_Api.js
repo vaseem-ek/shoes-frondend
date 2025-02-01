@@ -16,3 +16,6 @@ export const addShoes=async(data,headers)=>{
 export const listShoe=async(headers)=>{
     return await commonApi(`${BaseUrl}/admin/list-shoes`,'GET',headers,"")
 }
+export const removeShoe=async(id,headers)=>{
+    return await commonApi(`${BaseUrl}/admin/remove-shoes/${id}`,'DELETE',headers,[])
+}
