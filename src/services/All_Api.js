@@ -13,9 +13,18 @@ export const LoginApi=async(data)=>{
 export const addShoes=async(data,headers)=>{
     return await commonApi(`${BaseUrl}/admin/addShoes`,'POST',headers,data)
 }
-export const listShoe=async(headers)=>{
-    return await commonApi(`${BaseUrl}/admin/list-shoes`,'GET',headers,"")
+export const listShoe=async()=>{
+    return await commonApi(`${BaseUrl}/admin/list-shoes`,'GET',"","")
 }
 export const removeShoe=async(id,headers)=>{
     return await commonApi(`${BaseUrl}/admin/remove-shoes/${id}`,'DELETE',headers,[])
+}
+
+export const editShoe=async(id,data,headers)=>{
+    return await commonApi(`${BaseUrl}/admin/update-shoes/${id}`,'PUT',headers,data)
+}
+//users
+
+export const getspecific=async(id)=>{
+    return await commonApi(`${BaseUrl}/getSpecific/${id}`,'GET',"","")
 }

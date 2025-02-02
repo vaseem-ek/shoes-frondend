@@ -69,6 +69,7 @@ const Navbar = () => {
                                         tabIndex="-1"
                                     >
                                         <div className="py-1" role="none">
+                                           
                                             <a
                                                 href="#"
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -132,22 +133,22 @@ const Navbar = () => {
                     {isMenuOpen && (
                         <div className="lg:hidden">
                             <a
-                                href="#"
+                                href="/"
                                 className="block px-4 py-2  hover:bg-slate-300 transition"
                             >
                                 Home
                             </a>
                             <a
-                                href="#"
+                                href="/AllProduct"
+                                className="block px-4 py-2  hover:bg-slate-300 transition"
+                            >
+                                All Product
+                            </a>
+                            <a
+                                href="/about"
                                 className="block px-4 py-2  hover:bg-slate-300 transition"
                             >
                                 About
-                            </a>
-                            <a
-                                href="#"
-                                className="block px-4 py-2  hover:bg-slate-300 transition"
-                            >
-                                Services
                             </a>
                             <a
                                 href="#"
@@ -156,12 +157,7 @@ const Navbar = () => {
                                 Contact
                             </a>
                             
-                            <a
-                                href="#"
-                                className="block px-4 py-2 hover:bg-slate-300 transition"
-                            >
-                                Profile
-                            </a>
+                           
                             
                         </div>
                     )}

@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SideBar from '../components/SideBar'
 import { MdOutlineEdit } from 'react-icons/md'
 import { RxCross2 } from 'react-icons/rx'
 import { listShoe, removeShoe } from '../../services/All_Api'
 import { BaseUrl } from '../../services/Base_Url'
+import { useNavigate } from 'react-router-dom'
 
 function RecipeList() {
     const [allShoes, setAllShoes] = useState([])
     useEffect(() => {
         getItem()
     }, [])
+    const nav=useNavigate()
 
     const getItem = async () => {
 
@@ -32,6 +34,9 @@ function RecipeList() {
         console.log(result);
         
         getItem()
+    }
+    const handleEdit =(id)=>{
+        nav(`/admin/edit/${id}`)
     }
     return (
         <div>
@@ -103,7 +108,7 @@ function RecipeList() {
                                                     </td>
                                                     <td className="px-6 py-4">
                                                         <div className='flex gap-7 justify-center'>
-                                                            <MdOutlineEdit size={25} className='cursor-pointer hover:text-green-600' />
+                                                            <MdOutlineEdit onClick={()=>handleEdit(item._id)} size={25} className='cursor-pointer hover:text-green-600' />
                                                             <RxCross2 onClick={()=>handleDelete(item._id)} className='cursor-pointer hover:text-red-600' size={25} />
 
                                                         </div>

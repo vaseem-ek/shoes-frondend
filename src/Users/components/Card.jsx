@@ -1,32 +1,72 @@
-import React, { useState } from 'react'
-import { FaHeart } from 'react-icons/fa6'
+import React, { useState } from 'react';
+import { FaHeart } from 'react-icons/fa6';
+import { BaseUrl } from '../../services/Base_Url';
+import { useNavigate } from 'react-router-dom';
 
-function Card() {
-    const [saved,setSaved]=useState(false)
+function Card({ item }) {
+  const nav=useNavigate()
+  const [saved, setSaved] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+
   return (
-    <div className='my-2 flex justify-center items-center'>
-      <div className='w-[18rem] rounded-lg shadow-black py-2  px-3 shadow'>
-        <div className='flex justify-between py-2 '>
-            <p>brand:<span className='text-blue-400 font-bold'>nike</span> </p>
-            <FaHeart size={20} className={saved?  "text-red-700 cursor-pointer" :"text-gray-200 cursor-pointer"}onClick={()=>setSaved(!saved)} />
-            
+    <div className="flex justify-center items-center">
+      <div className="w-[18rem] h-[450px] flex flex-col justify-between rounded-lg shadow-lg py-4 px-5 bg-white transition-all duration-300 hover:shadow-2xl border border-gray-200">
+        
+        {/* Brand and Favorite Icon */}
+        <div className="flex justify-between items-center">
+          <p className="text-gray-600 text-sm">
+            Brand: <span className="text-blue-500 font-semibold">{item.brand || 'N/A'}</span>
+          </p>
+          <FaHeart
+            size={22}
+            className={`cursor-pointer mb-2 transition-all duration-300 ${saved ? 'text-red-600 scale-110' : 'text-gray-300 hover:text-gray-500'}`}
+            onClick={() => setSaved(!saved)}
+          />
         </div>
-        <div className=' overflow-hidden rounded-lg'>
-            <img src="https://redtape.com/cdn/shop/files/RSO4102_1_c0a68240-77e5-4003-8465-bff2bb2280a7.jpg?v=1719938886" className='rounded-lg cursor-pointer hover:scale-110 duration-500 ' alt="" />
-        </div>
-        <div className=''>
-            <p className='text-xl font-extrabold'>Nike Sports</p>
-            <p className='text-xs'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia quam unde magni, amet beatae voluptatem atque ea</p>
-        </div>
-        <div className='flex justify-between'>
-            <p>color: <span className='font-bold text-slate-500'>white</span></p>
-           <p>$: <span className='font-bold text-amber-400'>99.9</span></p>
-        </div>
-      
 
+        {/* Product Image */}
+        <div className="overflow-hidden rounded-lg h-[160px] flex justify-center items-center" >
+          {item.images && item.images.length > 0 ? (
+            <img
+              src={`${BaseUrl}/upload/${item.images[0].filename}`}
+              alt={`${item.name || 'Product'} - Image`}
+              className="rounded-md border w-full h-full cursor-pointer object-cover transition-transform duration-300 hover:scale-105"
+              
+            />
+          ) : (
+            <span className="text-red-500">No image available</span>
+          )}
+        </div>
+
+        {/* Product Details */}
+        <div className="flex flex-col flex-grow mt-2">
+          <p className="text-lg font-bold text-gray-800">{item.name || 'No Name'}</p>
+          <p className={`text-sm text-gray-600 ${showFullDescription ? "" : "line-clamp-3"}`}>
+            {item.description || 'No description available'}
+          </p>
+          {item.description && item.description.length > 50 && (
+            <button
+              className="text-blue-500 text-xs font-medium mt-1 hover:underline"
+              onClick={() => setShowFullDescription(!showFullDescription)}
+            >
+              {showFullDescription ? "Read Less" : "Read More"}
+            </button>
+          )}
+        </div>
+
+        {/* Price & Color */}
+        <div className="flex justify-between items-center border-t pt-2 mt-2">
+          <p className="text-gray-600 text-sm">
+            Color: <span className="font-semibold text-gray-700">{item.color || 'N/A'}</span>
+          </p>
+          <p className="text-lg font-bold text-amber-500">
+            ${item.price ? item.price.toFixed(2) : 'N/A'}
+          </p>
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Card
+export default Card;

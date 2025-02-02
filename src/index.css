@@ -1,17 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lilita+One&family=M+PLUS+Rounded+1c&family=Outfit:wght@100..900&family=Pacifico&family=Playwrite+IN:wght@100..400&family=Rubik+Vinyl&family=Rubik+Wet+Paint&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lilita+One&family=M+PLUS+Rounded+1c&family=Oswald:wght@200..700&family=Outfit:wght@100..900&family=Pacifico&family=Playwrite+IN:wght@100..400&family=Rubik+Vinyl&family=Rubik+Wet+Paint&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-h1{
-    font-family: "Afacad Flux", serif;
-    font-optical-sizing: auto;
-    font-weight: 100;
-    /* font-style: normal; */
-    font-variation-settings:
-      "slnt" 0;
+.rubik-wet-paint-regular {
+  font-family: "Rubik Wet Paint", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+*{
+  font-family: Outfit;
 }
 h2{
   background:'orange';

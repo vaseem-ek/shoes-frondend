@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from './Navbar'
 import { Link, useNavigate } from 'react-router-dom'
 import { registetApi } from '../../services/All_Api'
+import { toast } from 'react-toastify'
 
 
 
@@ -21,12 +22,12 @@ function Register() {
         console.log(result)
         if (result.status == 201) {
             nav('/login')
-            alert("registraion success")
+            toast.success("registraion success")
             setUserData({
                 username: "", email: "", password: ""
             })
         } else {
-            alert(result.response.data.message);
+            toast.error(result.response.data.message);
 
         }
 

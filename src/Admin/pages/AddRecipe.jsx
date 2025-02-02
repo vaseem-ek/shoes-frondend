@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SideBar from '../components/SideBar'
 import { Link, useNavigate } from 'react-router-dom'
 import { addShoes } from '../../services/All_Api'
@@ -35,15 +35,13 @@ function AddRecipe() {
             fd.append('price',price)
             fd.append('gender',gender)
             fd.append('shoeType',type)
-            fd.append('size',size)
+            fd.append('size',JSON.stringify(size))
 
             const headers={
                 'Content-type':'multipart/formdata',
                 'Authorization':`Token ${sessionStorage.getItem('token')}`
             }
             const res=await addShoes(fd,headers)
-            console.log(res)
-            toast.success(res.data.message)
             nav('/admin/Allproduct')
             setImage1("")
             setImage2("")
@@ -57,6 +55,8 @@ function AddRecipe() {
             setGender("")
             setType("")
             setSize([])
+            console.log(res)
+            toast.success(res.data.message)
         } catch (error) {
 
         }
@@ -194,6 +194,7 @@ function AddRecipe() {
                                     </select>
                                 </div>
                                 <div className='mt-2'>
+                                    <h2 className='text-xl mb-2'>size</h2>
                                     <div className='flex gap-4'>
                                         {['6', '7', '8', '9', '10', '11'].map((sizeOption) => (
                                             <div key={sizeOption} onClick={() => setSize(prev =>

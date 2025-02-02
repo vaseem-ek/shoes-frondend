@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from './Navbar'
 import { Link, useNavigate } from 'react-router-dom'
 import { LoginApi } from '../../services/All_Api'
+import { toast } from 'react-toastify'
 
 
 
@@ -16,7 +17,7 @@ function Login() {
         e.preventDefault()
         const { email, password } = userData
         if (!email || !password) {
-            alert("fill in the fields")
+            toast.error("fill in the fields")
         }
         const result = await LoginApi(userData)
         console.log(result)
@@ -24,7 +25,7 @@ function Login() {
             if(result.data.user.role=='user'){
 
                 nav('/')
-                alert('login success')
+                toast.success('login success')
                 sessionStorage.setItem('token', result.data.token)
                 sessionStorage.setItem('user', JSON.stringify(result.data.user))
             }
@@ -36,7 +37,7 @@ function Login() {
             }
             
         } else {
-            alert(result.response.data.message)
+            toast.warning(result.response.data.message)
         }
 
 
