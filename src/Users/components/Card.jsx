@@ -7,6 +7,9 @@ function Card({ item }) {
   const nav=useNavigate()
   const [saved, setSaved] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const handleShow=(id)=>{
+    nav(`/product/${id}`)
+  }
 
 
   return (
@@ -30,6 +33,7 @@ function Card({ item }) {
           {item.images && item.images.length > 0 ? (
             <img
               src={`${BaseUrl}/upload/${item.images[0].filename}`}
+              onClick={()=>handleShow(item._id)}
               alt={`${item.name || 'Product'} - Image`}
               className="rounded-md border w-full h-full cursor-pointer object-cover transition-transform duration-300 hover:scale-105"
               

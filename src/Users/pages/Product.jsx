@@ -1,70 +1,165 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { getspecific } from '../../services/All_Api';
 import { BaseUrl } from '../../services/Base_Url';
+import Navbar from '../components/Navbar';
+import Card from '../components/Card';
 
 function Product() {
-    const { id } = useParams()
-    console.log(id);
-    const [data, setData] = useState([])
+    const { id } = useParams();
+    const [data, setData] = useState({});
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const [size, setSize] = useState([])
 
     useEffect(() => {
-        getProduct()
+        getProduct();
+
+    }, [id]);
+    useEffect(() => {
+        setSize(data.size)
     }, [])
+
     const getProduct = async () => {
-        const res = await getspecific(id)
-        // console.log(res.data);
-        setData(res.data);
-        console.log(data);
+        try {
+            const res = await getspecific(id);
+            setData(res.data);
 
 
-    }
+
+
+            // Ensure images exist before setting default index
+            if (res.data.images && res.data.images.length > 0) {
+                setCurrentIndex(0);
+            }
+        } catch (error) {
+            console.error("Error fetching product:", error);
+        }
+    };
+
+    // Navigate to Previous Image
+    const prevImage = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? data.images.length - 1 : prevIndex - 1
+        );
+    };
+
+    // Navigate to Next Image
+    const nextImage = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === data.images.length - 1 ? 0 : prevIndex + 1
+        );
+    };
 
     return (
         <div>
-            <div className='grid gird-[1fr_1fr] grid-cols-1 lg:grid-col-2 md:grid-cols-2'>
-                <div className='bg-red-200'>
-                    <img src="https://m.media-amazon.com/images/I/719SkSU-PgL._SX695_.jpg" alt="" />
+            <Navbar />
+            <div>
+                <div className="grid justify-center mt-10 sm:mt-3 items-center grid-cols-1 lg:grid-cols-2 md:grid-cols-2">
+
+                    {/* Image Carousel Section */}
+                    <div className="flex flex-col items-center relative w-full px-10">
+                        {data.images?.length > 0 && (
+                            <div className="relative w-[300px] lg:w-full md:w-full border-orange-400 shadow-md shadow-orange-300 h-[300px] flex justify-center items-center">
+                                {/* Previous Button */}
+                                <button onClick={prevImage} className="absolute left-2 bg-gray-800 text-white p-2 rounded-full">
+                                    ❮
+                                </button>
+
+                                {/* Main Displayed Image */}
+                                <img
+                                    src={`${BaseUrl}/upload/${data.images[currentIndex].filename}`}
+                                    alt="Product"
+                                    className="w-full h-full object-contain rounded-lg shadow-md"
+                                />
+
+                                {/* Next Button */}
+                                <button onClick={nextImage} className="absolute right-2 bg-gray-800 text-white p-2 rounded-full">
+                                    ❯
+                                </button>
+                            </div>
+                        )}
+
+                        {/* Thumbnail Images */}
+                        <div className="flex mt-4 space-x-2 overflow-x-auto">
+                            {data.images?.map((item, index) => (
+                                <img
+                                    key={index}
+                                    src={`${BaseUrl}/upload/${item.filename}`}
+                                    width={60}
+                                    className={`cursor-pointer rounded-md border-2 p-1 
+                    ${index === currentIndex ? "border-orange-500" : "border-gray-300"}`}
+                                    alt="Thumbnail"
+                                    onClick={() => setCurrentIndex(index)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Product Details */}
+                    <div>
+                        <table className="border-collapse">
+                            <tbody>
+                                <tr>
+                                    <td className="font-bold text-xl text-orange-300 hover:drop-shadow-md">{data.name}</td>
+                                </tr>
+                                <hr />
+                                <tr>
+                                    <td className="text-md text-slate-500 px-2">
+                                        <span className="text-black">Description:</span> {data.description}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td className="text-md text-slate-500 px-2">
+                                        <span className="text-black">Gender:</span> {data.gender}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-md text-slate-500 px-2">
+                                        <span className="text-black">Brand:</span> {data.brand}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-md text-slate-500 px-2">
+                                        <span className="text-black">Color:</span> {data.color}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-md text-slate-500 px-2">
+                                        <span className="text-black">Price:</span> $ {data.price}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-md text-slate-500 px-2">
+                                        <span className="text-black">Type:</span> {data.shoeType}
+                                    </td>
+                                </tr>
+                                <div className="my-4">
+                                    <h4 className="text-lg font-semibold">Available Sizes:</h4>
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                        {size?.map((item, index) => (
+                                            <span key={index} className="bg-orange-400 text-white py-2 px-3 rounded-md">
+                                                {item}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+
+
+                                <button className='bg-black px-3 py-2 rounded text-white hover:shadow-orange-400 hover:shadow-md'>Add To Cart</button>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
-                <div className='bg-yellow-300'>
+                <h3 className='text-center text-green-400 font-bold text-xl md:text-2xl lg:text-4xl my-3'>Related Product</h3>
+                <div>
 
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>{data.name}</td>
-                            </tr>
-                            <tr>
-                                <td>{data.description}</td>
-                            </tr>
-                            <tr>
-                                <td>{data.gender}</td>
-                            </tr>
-                            <tr>
-                                <td>{data.brand}</td>
-                            </tr>
-                            <tr>
-                                <td>{data.color}</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    
-                                        {data.size}
-                                  
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </thead>
-                    </table>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Product
+export default Product;

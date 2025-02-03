@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Heading from './Heading'
+import ResponseContext from '../../ContextApi/responseContext'
 
 function Offers() {
+
+  const {response}=useContext(ResponseContext)
+  useEffect(()=>{
+    console.log(response);
+    
+  },[response])
     return (
         <div className="py-5 px5">
-        <Heading head={"Offer"} head2={"Zone"} />
+        <Heading head={"Offer"} head2={"Adida"} />
         <div className="pt-5 flex flex-wrap gap-5 justify-center shadow-zinc-800">
           {/* Product Card 1 */}
           <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 rounded border border-black">

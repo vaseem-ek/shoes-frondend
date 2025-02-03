@@ -5,7 +5,6 @@ const ResponseContext = createContext();
 
 export const ResponseProvider = ({ children }) => {
   const [response, setResponse] = useState([]);
-  const [oneProduct,setOneProduct]=useState([])
 
   
 
