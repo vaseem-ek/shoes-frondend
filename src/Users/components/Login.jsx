@@ -23,7 +23,6 @@ function Login() {
         console.log(result)
         if (result.status == 200) {
             if(result.data.user.role=='user'){
-
                 nav('/')
                 toast.success('login success')
                 sessionStorage.setItem('token', result.data.token)
@@ -32,10 +31,9 @@ function Login() {
             else{
                 sessionStorage.setItem('token', result.data.token)
                 sessionStorage.setItem('user', JSON.stringify(result.data.user))
+                toast.success('login success')
                 nav('/admin')
-
             }
-            
         } else {
             toast.warning(result.response.data.message)
         }

@@ -6,12 +6,15 @@ import Navbar from '../components/Navbar';
 import RelatedProduct from '../components/RelatedProduct';
 import Footer from '../components/Footer';
 import Heading from '../components/Heading'
+import { FaHeart } from 'react-icons/fa6';
 
 function Product() {
     const { id } = useParams();
     const [data, setData] = useState({});
     const [currentIndex, setCurrentIndex] = useState(0)
     const [size, setSize] = useState('')
+    const [saved, setSaved] = useState(false);
+
 
     useEffect(() => {
         getProduct();
@@ -25,7 +28,6 @@ function Product() {
 
 
 
-            // Ensure images exist before setting default index
             if (res.data.images && res.data.images.length > 0) {
                 setCurrentIndex(0);
             }
@@ -34,14 +36,12 @@ function Product() {
         }
     };
 
-    // Navigate to Previous Image
     const prevImage = () => {
         setCurrentIndex((prevIndex) =>
             prevIndex === 0 ? data.images.length - 1 : prevIndex - 1
         );
     };
 
-    // Navigate to Next Image
     const nextImage = () => {
         setCurrentIndex((prevIndex) =>
             prevIndex === data.images.length - 1 ? 0 : prevIndex + 1
@@ -54,30 +54,28 @@ function Product() {
             <div>
                 <div className="grid justify-center mt-10 sm:mt-3 items-center grid-cols-1 lg:grid-cols-2 md:grid-cols-2">
 
-                    {/* Image Carousel Section */}
                     <div className="flex flex-col items-center relative w-full px-10">
                         {data.images?.length > 0 && (
                             <div className="relative w-[400px]  border-orange-400 shadow-md shadow-orange-300 h-[400px] flex justify-center items-center">
-                                {/* Previous Button */}
                                 <button onClick={prevImage} className="absolute left-2 bg-gray-800 text-white p-2 rounded-full">
                                     ❮
                                 </button>
 
-                                {/* Main Displayed Image */}
                                 <img
                                     src={`${BaseUrl}/upload/${data.images[currentIndex].filename}`}
                                     alt="Product"
                                     className="w-full h-full object-contain rounded-lg shadow-md"
                                 />
-
-                                {/* Next Button */}
-                                <button onClick={nextImage} className="absolute right-2 bg-gray-800 text-white p-2 rounded-full">
+                                <FaHeart
+                                    size={30}
+                                    className={`cursor-pointer mb-2 transition-all duration-300 absolute top-2 right-3 ${saved ? 'text-red-600 scale-110' : 'text-gray-300 hover:text-gray-500'}`}
+                                    onClick={() => setSaved(!saved)}
+                                />                                <button onClick={nextImage} className="absolute right-2 bg-gray-800 text-white p-2 rounded-full">
                                     ❯
                                 </button>
                             </div>
                         )}
 
-                        {/* Thumbnail Images */}
                         <div className="flex mt-4 space-x-2 overflow-x-auto">
                             {data.images?.map((item, index) => (
                                 <img
@@ -93,7 +91,6 @@ function Product() {
                         </div>
                     </div>
 
-                    {/* Product Details */}
                     <div>
                         <div className='px-10'>
                             <tr >
@@ -175,11 +172,11 @@ function Product() {
 
                 </div>
                 <div className='mt-20'>
-                <Heading head={'RELATED'} head2={'PRODUCT'}/>
+                    <Heading head={'RELATED'} head2={'PRODUCT'} />
 
                 </div>
                 <div>
-                    <RelatedProduct items={data.color} />
+                    <RelatedProduct items={data} />
                 </div>
             </div>
             <Footer />

@@ -1,70 +1,56 @@
 import React, { useContext, useEffect } from 'react'
 import Heading from './Heading'
 import ResponseContext from '../../ContextApi/responseContext'
+import { BaseUrl } from '../../services/Base_Url'
+import { useNavigate } from 'react-router-dom'
 
 function Offers() {
+  const nav=useNavigate()
 
-  const {response}=useContext(ResponseContext)
-  useEffect(()=>{
-    console.log(response);
-    
-  },[response])
-    return (
-        <div className="py-5 px5">
-        <Heading head={"Offer"} head2={"Adida"} />
-        <div className="pt-5 flex flex-wrap gap-5 justify-center shadow-zinc-800">
-          {/* Product Card 1 */}
-          <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 rounded border border-black">
-            <img
-              src="https://redtape.com/cdn/shop/files/RSO4102_1_c0a68240-77e5-4003-8465-bff2bb2280a7.jpg?v=1719938886"
-              className="rounded-t"
-              alt="nike product"
-            />
-            <div className="p-2">
-              <h3 className="text-xl font-bold">nike</h3>
-              <p className="text-gray-800">44 $</p>
-              <p className="text-slate-700">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-                harum cupiditate, ad hic eaque voluptas
-              </p>
+  const { response } = useContext(ResponseContext)
+  useEffect(() => {
+    console.log(product);
+
+  }, [response])
+  const product = response.slice(-4, -1)
+  const handleShow=(id)=>{
+    nav(`/product/${id}`)
+  }
+  return (
+    <div className="py-5 px5">
+      <Heading head={"Latest"} head2={"Shoes"} />
+      <div className="pt-5 flex flex-wrap gap-5 justify-center shadow-zinc-800">
+        {/* Product Card 1 */}
+        {
+          product.map(item => (
+
+            <div className=" grid grid-cols-1 md:grid-cols-3 rounded border border-black">
+              {item.images && item.images.length > 0 ? (
+                <img
+                  src={`${BaseUrl}/upload/${item.images[0].filename}`}
+                  onClick={() => handleShow(item._id)}
+                  alt={`${item.name || 'Product'} - Image`}
+                  className="rounded-md border w-full h-full cursor-pointer object-cover transition-transform duration-300 hover:scale-105"
+                />
+              ) : (
+                <span className="text-red-500">No image available</span>
+              )}
+              <div className="p-2">
+                <h3 className="text-xl font-bold">{item.name}</h3>
+                <p className="text-gray-800"> ${item.price}</p>
+                <p className="text-slate-700">
+                  {item.description}</p>
+              </div>
             </div>
-          </div>
-          {/* Product Card 2 */}
-          <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 rounded border border-black">
-            <img
-              src="https://redtape.com/cdn/shop/files/RSO4102_1_c0a68240-77e5-4003-8465-bff2bb2280a7.jpg?v=1719938886"
-              className="rounded-t"
-              alt="nike product"
-            />
-            <div className="p-2">
-              <h3 className="text-xl font-bold">nike</h3>
-              <p className="text-gray-800">44 $</p>
-              <p className="text-slate-700">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-                harum cupiditate, ad hic eaque voluptas
-              </p>
-            </div>
-          </div>
-          {/* Product Card 3 */}
-          <div className="w-full  sm:w-1/2 md:w-1/3 lg:w-1/5 rounded border border-black">
-            <img
-              src="https://redtape.com/cdn/shop/files/RSO4102_1_c0a68240-77e5-4003-8465-bff2bb2280a7.jpg?v=1719938886"
-              className="rounded-t"
-              alt="nike product"
-            />
-            <div className="p-2">
-              <h3 className="text-xl font-bold">nike</h3>
-              <p className="text-gray-800">44 $</p>
-              <p className="text-slate-700">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-                harum cupiditate, ad hic eaque voluptas
-              </p>
-            </div>
-          </div>
-        </div>
+          ))
+        }
+
+
+
       </div>
-      
-    )
+    </div>
+
+  )
 }
 
 export default Offers

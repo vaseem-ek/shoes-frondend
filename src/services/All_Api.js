@@ -28,3 +28,13 @@ export const editShoe=async(id,data,headers)=>{
 export const getspecific=async(id)=>{
     return await commonApi(`${BaseUrl}/getSpecific/${id}`,'GET',"","")
 }
+
+export const savedShoes=async(data,headers)=>{
+    return await commonApi(`${BaseUrl}/savedShoe`,'POST',headers,data)
+}
+export const getSaved=async(headers)=>{
+    return await commonApi(`${BaseUrl}/listShoe`,'GET',headers,"")
+}
+export const removeSaveApi=async(id,headers)=>{
+    return await commonApi(`${BaseUrl}/removeShoe/${id}`,'DELETE',headers,[])
+}

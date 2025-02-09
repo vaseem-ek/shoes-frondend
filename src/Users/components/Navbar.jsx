@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ResponseContext from "../../ContextApi/responseContext";
 
 
 const Navbar = () => {
     // State to toggle the mobile menu
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const {savedData}=useContext(ResponseContext)
 
+useEffect(()=>{
+console.log(savedData);
 
+},[savedData])
     return (
         <div className="">
             <nav className="  ">
@@ -31,6 +36,9 @@ const Navbar = () => {
                             </Link>
                             <Link to="/contact" className=" hover:text-gray-200 transition font-bold">
                                 Contact
+                            </Link>
+                            <Link to="/save" className=" hover:text-gray-200 transition font-bold">
+                                saved <span className="bg-red-500 px-2 py-1 text-white rounded">{savedData.length}</span>
                             </Link>
                             
                         </div>

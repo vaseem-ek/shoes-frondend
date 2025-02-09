@@ -5,6 +5,7 @@ const ResponseContext = createContext();
 
 export const ResponseProvider = ({ children }) => {
   const [response, setResponse] = useState([]);
+  const [savedData, setSavedData] = useState([]);
 
   
 
@@ -15,9 +16,11 @@ export const ResponseProvider = ({ children }) => {
   useEffect(()=>{
     getProduct()
   },[])
+  
 
   const value={
-    response
+    response,
+    savedData,setSavedData
   }
 
   return (
