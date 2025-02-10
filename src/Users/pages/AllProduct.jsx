@@ -9,9 +9,8 @@ function AllProduct() {
   const [gender, setGender] = useState([]);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [showFilters, setShowFilters] = useState(false); // For mobile filter toggle
+  const [showFilters, setShowFilters] = useState(false); 
 
-  // Toggle Color
   const toggleColor = (e) => {
     const value = e.target.value;
     setColor((prev) =>
@@ -19,15 +18,12 @@ function AllProduct() {
     );
   };
 
-  // Toggle Gender
   const toggleGender = (e) => {
     const value = e.target.value;
     setGender((prev) =>
       prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
     );
   };
-
-  // Apply Filter
   useEffect(() => {
     let filtered = products.slice();
 
@@ -42,7 +38,6 @@ function AllProduct() {
     setFilteredProducts(filtered);
   }, [color, gender, products]);
 
-  // Fetch Data
   useEffect(() => {
     getData();
   }, []);
@@ -60,7 +55,6 @@ function AllProduct() {
       <Navbar />
 
       <div className="p-4">
-        {/* Filter Button (Mobile) */}
         <button
           className="md:hidden  text-greem-900 border shadow-yellow-600 shadow px-4 py-2 rounded-md mb-4"
           onClick={() => setShowFilters(!showFilters)}
@@ -69,7 +63,6 @@ function AllProduct() {
         </button>
 
         <div className="grid md:grid-cols-[250px_1fr] gap-4">
-          {/* Sidebar Filters */}
           <div
             className={`md:block bg-white shadow-md p-4 rounded-md transition-all ${
               showFilters ? "block" : "hidden"
@@ -99,7 +92,6 @@ function AllProduct() {
               ))}
             </div>
 
-            {/* Close Button (Mobile) */}
             <button
               className="md:hidden mt-4 border shadow-amber-500 shadow-sm text-red-900 px-4 py-2 rounded-md"
               onClick={() => setShowFilters(false)}
@@ -111,7 +103,9 @@ function AllProduct() {
           {/* Right Products Section */}
           <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
             {filteredProducts.length > 0 ? (
-              filteredProducts.map((item) => <Card key={item.id} item={item} />)
+              filteredProducts.map((item) => 
+              <Card key={item.id} item={item} />
+            )
             ) : (
               <h2 className="text-red-600 text-2xl col-span-full text-center">
                 No products available

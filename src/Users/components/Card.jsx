@@ -2,15 +2,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FaHeart } from 'react-icons/fa6';
 import { BaseUrl } from '../../services/Base_Url';
 import { useNavigate } from 'react-router-dom';
-import { savedShoes } from '../../services/All_Api';
+import { removeSaveApi, savedShoes } from '../../services/All_Api';
 import { toast } from 'react-toastify';
+import ResponseContext from '../../ContextApi/responseContext';
 
 function Card({ item }) {
   const nav = useNavigate()
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [sav, setSav] = useState(false)
+  const { setSavedData } = useContext(ResponseContext)
 
   const savedShoe = async () => {
+    if(sessionStorage.getItem('token')){
+
 
     const fd = new FormData();
     fd.append('name', item.name);
@@ -22,19 +26,25 @@ function Card({ item }) {
       'Content-type': 'application/json',
       'Authorization': `Token ${sessionStorage.getItem('token')}`
     };
+    
 
-    const res = await savedShoes(fd, headers);
-    console.log(res);
-    if (res.status == 200) {
+      const res = await savedShoes(fd, headers);
+      console.log(res);
+      if (res.status == 201) {
 
-      toast.success(res.data.message)
-      setSav(true)
-    } else {
-      toast.error(res.response.data.message)
-      setSav(false)
+        toast.success("product added")
+        setSavedData(res.data.newSaved)
+        setSav(true)
+      } else {
+        toast.error(res.response.data.message)
+        setSav(false)
+      }
+    }else{
+      toast.warning("user not authorized")
     }
   };
- 
+   
+
 
 
   const handleShow = (id) => {

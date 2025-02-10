@@ -1,18 +1,54 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ResponseContext from "../../ContextApi/responseContext";
+import { getSaved } from "../../services/All_Api";
 
 
 const Navbar = () => {
-    // State to toggle the mobile menu
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const {savedData}=useContext(ResponseContext)
+    const { savedData } = useContext(ResponseContext)
+    const [pro, setPro] = useState([])
+    const [uname, setUname] = useState('')
+    const nav = useNavigate()
 
-useEffect(()=>{
-console.log(savedData);
+    useEffect(() => {
+        getdata()
+    }, [savedData])
 
-},[savedData])
+    useEffect(() => {
+        if (sessionStorage.getItem('user')) {
+            setUname(JSON.parse(sessionStorage.getItem('user')))
+            console.log(uname);
+
+        }
+    }, [])
+
+    const logOut = () => {
+        sessionStorage.clear()
+        nav('/')
+        setIsOpen(!isOpen)
+    }
+
+
+    const getdata = async () => {
+        if (sessionStorage.getItem('token')) {
+
+
+            const header = {
+                'Content-type': 'application/json',
+                'Authorization': `Token ${sessionStorage.getItem('token')}`
+            }
+
+            const res = await getSaved(header)
+            console.log(res.data.message);
+            setPro(res.data.message);
+
+        }
+
+    }
+
+
     return (
         <div className="">
             <nav className="  ">
@@ -38,19 +74,20 @@ console.log(savedData);
                                 Contact
                             </Link>
                             <Link to="/save" className=" hover:text-gray-200 transition font-bold">
-                                saved <span className="bg-red-500 px-2 py-1 text-white rounded">{savedData.length}</span>
+                                saved <span className={`${pro.length > 0 ? 'bg-red-500 px-2 py-1 rounded-full text-white ' : 'text-white'}`}>{pro.length}</span>
                             </Link>
-                            
+
                         </div>
                         <div>
                             <div className="relative  inline-block text-left">
-                                {/* Dropdown Toggle */}
+
                                 <div className="hidden lg:flex ">
                                     <button
                                         onClick={() => setIsOpen(!isOpen)}
-                                        className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium  rounded-md "
-                                    >
-                                        Options
+                                        className={`${uname ? "inline-flex justify-center w-full px-4 py-2 text-xl font-bold text-orange-600  rounded-md" : "inline-flex justify-center w-full px-4 py-2 text-sm font-medium  rounded-md"}  `}
+                                    >{
+                                            uname.username || "Options"
+                                        }
                                         <svg
                                             className="-mr-1 ml-2 h-5 w-5"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -76,38 +113,59 @@ console.log(savedData);
                                         aria-labelledby="menu-button"
                                         tabIndex="-1"
                                     >
-                                        <div className="py-1" role="none">
-                                           
-                                            <a
-                                                href="#"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                role="menuitem"
-                                                tabIndex="-1"
-                                                id="menu-item-0"
-                                                onClick={()=>{setIsOpen(!isOpen)}}
-                                            >
-                                                Profile 
-                                            </a>
-                                            <Link
-                                                to="/login"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                role="menuitem"
-                                                tabIndex="-1"
-                                                id="menu-item-1"
-                                                onClick={()=>{setIsOpen(!isOpen)}}
-                                            >Login
-                                            </Link>
-                                            <Link
-                                                to="/register"
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                role="menuitem"
-                                                tabIndex="-1"
-                                                id="menu-item-2"
-                                                onClick={()=>{setIsOpen(!isOpen)}}
-                                            >
-                                                Sign up
-                                            </Link>
-                                        </div>
+                                        {
+                                            !uname && ( <div className="py-1" role="none">
+
+
+                                                <Link
+                                                    to="/login"
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    role="menuitem"
+                                                    tabIndex="-1"
+                                                    id="menu-item-1"
+                                                    onClick={() => { setIsOpen(!isOpen) }}
+                                                >Login
+                                                </Link>
+                                                <Link
+                                                    to="/register"
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    role="menuitem"
+                                                    tabIndex="-1"
+                                                    id="menu-item-2"
+                                                    onClick={() => { setIsOpen(!isOpen) }}
+                                                >
+                                                    Sign up
+                                                </Link>
+
+                                            </div>
+                                            )
+                                        }
+                                        {
+                                            uname && (
+                                                <div className="py-1" role="none">
+                                                    <a
+                                                        href="#"
+                                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                        role="menuitem"
+                                                        tabIndex="-1"
+                                                        id="menu-item-0"
+                                                        onClick={() => { setIsOpen(!isOpen) }}
+                                                    >
+                                                        Profile
+                                                    </a>
+                                                    <a
+                                                        to="/register"
+                                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                        role="menuitem"
+                                                        tabIndex="-1"
+                                                        id="menu-item-2"
+                                                        onClick={logOut}
+                                                    >
+                                                        LogOut
+                                                    </a>
+                                                </div>
+                                            )
+                                        }
                                     </div>
                                 )}
                             </div>
@@ -164,9 +222,9 @@ console.log(savedData);
                             >
                                 Contact
                             </a>
-                            
-                           
-                            
+
+
+
                         </div>
                     )}
                 </div>

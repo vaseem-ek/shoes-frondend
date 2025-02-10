@@ -15,6 +15,7 @@ import { ToastContainer } from 'react-toastify';
 import Product from './Users/pages/Product'
 import Edit from './Admin/components/Edit'
 import Save from './Users/components/save'
+import AllUsers from './Admin/pages/AllUsers'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Route path='/admin/Allproduct' element={<RecipeList/>}/>
         <Route path='/admin/Add' element={<AddRecipe/>}/>
         <Route path='/admin/edit/:id' element={<Edit/>}/>
+        <Route path='/admin/AllUser' element={<AllUsers/>}/>
         {/* users */}
         <Route path='/' element={<Home/>} />
         <Route path='/allProduct' element={<AllProduct/>} />

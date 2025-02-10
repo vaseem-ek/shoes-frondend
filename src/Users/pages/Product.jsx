@@ -66,11 +66,7 @@ function Product() {
                                     alt="Product"
                                     className="w-full h-full object-contain rounded-lg shadow-md"
                                 />
-                                <FaHeart
-                                    size={30}
-                                    className={`cursor-pointer mb-2 transition-all duration-300 absolute top-2 right-3 ${saved ? 'text-red-600 scale-110' : 'text-gray-300 hover:text-gray-500'}`}
-                                    onClick={() => setSaved(!saved)}
-                                />                                <button onClick={nextImage} className="absolute right-2 bg-gray-800 text-white p-2 rounded-full">
+                                <button onClick={nextImage} className="absolute right-2 bg-gray-800 text-white p-2 rounded-full">
                                     ❯
                                 </button>
                             </div>
@@ -119,8 +115,8 @@ function Product() {
                                 </td>
                             </tr>
                             <tr>
-                                <td className="text-md text-slate-500 px-2">
-                                    <span className="text-black">Price:</span> $ {data.price}
+                                <td className="text-md text-black px-2">
+                                    Price:$<span className="text-orange-400 font-bold  text-2xl"> {data.price}</span> 
                                 </td>
                             </tr>
                             <tr>
@@ -136,7 +132,7 @@ function Product() {
                                             key={index}
                                             onClick={() => setSize(item)}
                                             className={`cursor-pointer px-3 py-2 rounded-md text-black  bg-gray-300
-                                                ${item === size ? ' border-2 border-orange-700' : 'border-white'}`}
+                                                ${item === size ? ' border-2 border-orange-700' : ' border-2 border-white'}`}
                                         >
                                             {item}
                                         </span>

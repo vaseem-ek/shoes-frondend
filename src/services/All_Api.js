@@ -23,6 +23,9 @@ export const removeShoe=async(id,headers)=>{
 export const editShoe=async(id,data,headers)=>{
     return await commonApi(`${BaseUrl}/admin/update-shoes/${id}`,'PUT',headers,data)
 }
+export const allUserApi=async(headers)=>{
+    return await commonApi(`${BaseUrl}/admin/allUser`,'GET',headers,"")
+}
 //users
 
 export const getspecific=async(id)=>{

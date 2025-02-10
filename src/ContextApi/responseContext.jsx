@@ -16,6 +16,8 @@ export const ResponseProvider = ({ children }) => {
   useEffect(()=>{
     getProduct()
   },[])
+
+  
   
 
   const value={
